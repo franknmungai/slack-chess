@@ -5,7 +5,7 @@ import qs from 'query-string';
 
 const Join = (props) => {
 	const [name, setName] = useState('');
-	const [room, setRoom] = useState('');
+	const [gameId, setgameId] = useState('');
 
 	useEffect(() => {
 		// const { search } = props.location;
@@ -37,10 +37,10 @@ const Join = (props) => {
 						<input
 							type="text"
 							className="joinInput mt-20"
-							placeholder="Room"
-							onChange={({ target }) => setRoom(target.value)}
+							placeholder="Game ID"
+							onChange={({ target }) => setgameId(target.value)}
 							required
-							value={room}
+							value={gameId}
 						/>
 					</div>
 
