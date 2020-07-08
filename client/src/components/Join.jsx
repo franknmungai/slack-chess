@@ -2,6 +2,7 @@
 import './css/Join.css';
 import React, { useState, useEffect } from 'react';
 import qs from 'query-string';
+import { useHistory } from 'react-router-dom';
 
 const Join = (props) => {
 	const [name, setName] = useState('');
@@ -14,8 +15,12 @@ const Join = (props) => {
 		//save game id incase of query string
 	}, []);
 
+	const history = useHistory();
 	const onSubmitHandler = (event) => {
 		event.preventDefault();
+		if (name && gameId) {
+			history.push(`/game?name=${name}&id=${gameId}`);
+		}
 	};
 
 	return (

@@ -1,5 +1,7 @@
-import React, { useState, useRef, useReducer } from 'react';
+import React, { useState, useRef, useReducer, useEffect } from 'react';
 import Chess from 'chess.js';
+import io from 'socket.io-client';
+import qs from 'query-string';
 import Board from '../components/Board';
 import {
 	lightSquare,
@@ -22,11 +24,63 @@ import {
 } from '../store/AppReducer';
 import Captured from '../components/Captured';
 
+const SOCKET_SERVER = 'localhost:4000';
+let socket = io(SOCKET_SERVER);
+
 const App = (props) => {
 	//The FEN representation of the board. Stored in state
 	const startingFen =
 		localStorage.fen ||
 		'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
+
+	const playerColor = useRef();
+
+	useEffect(() => {
+		const { id, name } = qs.parse(props.location.search);
+		socket.emit('join', { name, game: id }, ({ error, color }) => {
+			// /we get an error or a color if the player was added successfully
+
+			if (error) alert(error);
+
+			if (color) {
+				const message = `You have been assigned to ${
+					color === 'w' ? 'white' : 'black'
+				}`;
+
+				alert(message);
+
+				// Set the turn
+				playerColor.current = color;
+			}
+		});
+	}, []);
+
+	useEffect(() => {
+		socket.on('message', (message) => {
+			console.log(message);
+		});
+	}, []);
+
+	useEffect(() => {
+		socket.on('opponentMove', ({ piece, fromPos, toPos }) => {
+			console.log({ piece, fromPos, toPos });
+			const data = chess.move(`${fromPos}-${toPos}`, { sloppy: true });
+			console.log('Move data ', data);
+			setFen(chess.fen()); //update the state with our new fen notation
+			// if (captured) {
+			// 	setCapturedPieces((state) => [
+			// 		...state,
+			// 		{
+			// 			// player, //w (color)
+			// 			captured, //B  (piece)
+			// 		},
+			// 	]);
+			// }
+
+			gameOverCheck();
+		});
+	}, []);
+
 	const [fen, setFen] = useState(startingFen);
 
 	const [possibleMoves, setPossibleMoves] = useState([]);
@@ -44,6 +98,10 @@ const App = (props) => {
 	const [gameOverState, dispatch] = useReducer(gameOverReducer, initialState);
 
 	const onDragStartHandler = (piece, pos) => {
+		if (chess.turn() !== playerColor.current) {
+			// return;
+		}
+
 		//sets the currenty playing piece and position
 		currentPlaying.current = piece;
 		fromPos.current = pos;
@@ -74,7 +132,12 @@ const App = (props) => {
 
 		gameOverCheck();
 
-		//Todo: emit socket event
+		// emit socket event with details about the move
+		socket.emit('move', {
+			piece: currentPlaying.current,
+			fromPos: fromPos.current,
+			toPos: toPos.current,
+		});
 	};
 
 	const gameOverCheck = () => {
