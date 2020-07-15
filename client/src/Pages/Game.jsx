@@ -27,11 +27,26 @@ import Captured from '../components/Captured';
 const SOCKET_SERVER = 'localhost:4000';
 let socket = io(SOCKET_SERVER);
 
+const startingFen =
+	// localStorage.fen ||
+	'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
+// const chess = new Chess(fen);
 const App = (props) => {
 	//The FEN representation of the board. Stored in state
-	const startingFen =
-		localStorage.fen ||
-		'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
+
+	const [fen, setFen] = useState(startingFen);
+	const [possibleMoves, setPossibleMoves] = useState([]);
+	const [capturedPieces, setCapturedPieces] = useState([]);
+	const [gameOver, setGameOver] = useState(false);
+
+	const { current: chess } = useRef(new Chess(fen));
+	const currentPlaying = useRef();
+	const fromPos = useRef();
+	const toPos = useRef();
+
+	const board = createBoard(createFenArray(fen)); // [{name: 'a8', piece: 'r'},{},{}]
+
+	const [gameOverState, dispatch] = useReducer(gameOverReducer, initialState);
 
 	const playerColor = useRef();
 
@@ -64,9 +79,11 @@ const App = (props) => {
 	useEffect(() => {
 		socket.on('opponentMove', ({ piece, fromPos, toPos }) => {
 			console.log({ piece, fromPos, toPos });
+			console.log('opponentMove', chess.turn());
 			const data = chess.move(`${fromPos}-${toPos}`, { sloppy: true });
 			console.log('Move data ', data);
 			setFen(chess.fen()); //update the state with our new fen notation
+			console.log('opponentMove', chess.turn());
 			// if (captured) {
 			// 	setCapturedPieces((state) => [
 			// 		...state,
@@ -80,22 +97,6 @@ const App = (props) => {
 			gameOverCheck();
 		});
 	}, []);
-
-	const [fen, setFen] = useState(startingFen);
-
-	const [possibleMoves, setPossibleMoves] = useState([]);
-	const [capturedPieces, setCapturedPieces] = useState([]);
-
-	const [gameOver, setGameOver] = useState(false);
-
-	const chess = new Chess(fen);
-	const currentPlaying = useRef();
-	const fromPos = useRef();
-	const toPos = useRef();
-
-	const board = createBoard(createFenArray(fen)); // [{name: 'a8', piece: 'r'},{},{}]
-
-	const [gameOverState, dispatch] = useReducer(gameOverReducer, initialState);
 
 	const onDragStartHandler = (piece, pos) => {
 		if (chess.turn() !== playerColor.current) {
