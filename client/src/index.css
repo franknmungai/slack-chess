@@ -7,8 +7,6 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 	padding: 0;
 	height: 100vh;
-	background: url('../src/images/castle-4690710_1920.jpg');
-	background-color: #444;
 }
 
 code {
