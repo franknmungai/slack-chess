@@ -1,5 +1,5 @@
 import React from 'react';
-import '../App.css';
+import '../styles/game.css';
 import getPieceImage from '../images/getPieceImages';
 
 // * Simple component for showing captured pieces

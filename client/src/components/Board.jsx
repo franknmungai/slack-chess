@@ -1,5 +1,5 @@
 import React from 'react';
-import '../App.css';
+import '../styles/game.css';
 
 const Board = (props) => {
 	return <div className="board">{props.children}</div>;
