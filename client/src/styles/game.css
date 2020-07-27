@@ -1,0 +1,51 @@
+.game {
+	display: grid;
+	padding: 1rem;
+	grid-template-columns: 0.5fr 6fr 0.5fr;
+}
+.board {
+	padding: 1rem;
+	margin: 3.5rem auto; /** centered */
+	border-radius: 12px;
+	box-shadow: 4px 4px 15px #e0dfdf;
+	max-width: 700px;
+	min-width: 500px;
+	/* height: 90vh; */
+	display: grid;
+	grid-template-columns: repeat(8, 1fr);
+	background-color: burlywood;
+}
+
+.piece {
+	text-align: center;
+	padding: 0.25rem 0.35rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 77px;
+	height: 60px;
+}
+
+.light {
+	background-color: rgb(235, 228, 219); /*#efefef;*/
+}
+.dark {
+	background-color: #b6b3b3;
+}
+
+.invisible {
+	/*hide piece from its original pos on drag start*/
+	display: none;
+}
+
+.possible-move {
+	box-shadow: -2px -2px inset goldenrod, goldenrod 2px 2px inset;
+}
+
+.captured__column {
+	display: flex;
+	flex-direction: column;
+	margin: auto;
+	flex-wrap: wrap;
+	height: 90vh;
+}

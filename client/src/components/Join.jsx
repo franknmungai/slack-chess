@@ -1,5 +1,5 @@
 // Join form
-import './css/Join.css';
+import '../styles/join.css';
 import React, { useState, useEffect } from 'react';
 import qs from 'query-string';
 import { useHistory } from 'react-router-dom';

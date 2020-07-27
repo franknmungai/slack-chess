@@ -30,7 +30,6 @@ let socket = io(SOCKET_SERVER);
 const startingFen =
 	// localStorage.fen ||
 	'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
-// const chess = new Chess(fen);
 const App = (props) => {
 	//The FEN representation of the board. Stored in state
 
@@ -84,12 +83,12 @@ const App = (props) => {
 			console.log('Move data ', data);
 			setFen(chess.fen()); //update the state with our new fen notation
 			console.log('opponentMove', chess.turn());
-			// if (captured) {
+			// if (data.captured) {
 			// 	setCapturedPieces((state) => [
 			// 		...state,
 			// 		{
-			// 			// player, //w (color)
-			// 			captured, //B  (piece)
+			// 			player, //w (color)
+			// 			captured: data.captured, //B  (piece)
 			// 		},
 			// 	]);
 			// }
