@@ -2,6 +2,8 @@
 	display: grid;
 	padding: 1rem;
 	grid-template-columns: 0.5fr 6fr 0.5fr;
+	background: url('../images/castle-4690710_1920.jpg');
+	background-color: #444;
 }
 .board {
 	padding: 1rem;
