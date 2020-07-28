@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Join from '../components/Join';
+import qs from 'query-string';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
@@ -7,28 +8,20 @@ import Tooltip from '@material-ui/core/Tooltip';
 import HomeSvg from '../images/home.svg';
 import '../styles/home.css';
 import '../styles/home-bg.css';
+import TypedText from '../components/TypedText';
 
-const Home = () => {
-	const textContent = useRef(Array.from('Anywhere... Anytime'));
-	const [text, setText] = useState('');
+const Home = (props) => {
+	const [openDialog, setOpenDialog] = useState(false);
+
+	const [invite, setInvited] = useState();
 
 	useEffect(() => {
-		const timer = setInterval(() => {
-			const lastCharIndex = text.length - 1;
-			console.log(lastCharIndex);
-
-			if (lastCharIndex === -1) {
-				//text is empty
-				setText(textContent.current[0]);
-			} else if (lastCharIndex + 1 === textContent.current.length) {
-				setText('');
-			} else {
-				setText((text) => text.concat(textContent.current[lastCharIndex + 1]));
-			}
-		}, 500);
-
-		return () => clearInterval(timer);
-	}, [text]);
+		const { id } = qs.parse(props.location.search);
+		if (id) {
+			setInvited(id);
+			console.log(id);
+		}
+	}, [invite]);
 
 	const icons = [
 		{
@@ -61,19 +54,36 @@ const Home = () => {
 				</object>
 				<div className="text-content m-1">
 					<p className="m-1">Enjoy an online chess game with your friends</p>
-					<p className="m-1 type-writer">{text}|</p>
+					<TypedText text="Anywhere... Anytime" />
 
 					<p className="m-1">
 						Get started by creating a new game and inviting your friends
 					</p>
 
 					<div className="actions">
-						<button className="btn new-btn m-1">New Game</button>
-						<button className="btn m-1 btn-link">How to play chess</button>
+						<button
+							className="btn new-btn m-1"
+							onClick={() => setOpenDialog(true)}
+						>
+							{!invite ? 'New Game' : 'Join game'}
+						</button>
+						<a
+							className="btn m-1 btn-link"
+							href={icons[0].link}
+							target="_blank"
+						>
+							How to play chess
+						</a>
 					</div>
 				</div>
 			</main>
-			{/* <Join /> */}
+			<Join
+				open={openDialog || !!invite} //the dialog opens automatically when someone is invited
+				onClose={() => {
+					setOpenDialog(false);
+				}}
+				invite={invite} //an invite id
+			/>
 		</div>
 	);
 };

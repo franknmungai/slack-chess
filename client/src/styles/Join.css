@@ -1,20 +1,18 @@
 .joinOuterContainer {
-	/* width: 70vw;
-	height: 70vh; */
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
 	z-index: 1;
+	padding: 5rem;
+	/* animation: animateBox 800ms forwards ease-in-out; */
 }
 .joinInnerContainer {
-	padding: 2rem;
 	box-shadow: 0 0 5px 6px #eaeaea;
 	border-radius: 0.75rem;
 	/* margin-left: 40px; */
 	margin: 9rem 0;
 	/* transform: translateY(0); */
-	animation: animateBox 800ms forwards ease-in-out;
 }
 .heading {
 	text-align: center;
@@ -23,23 +21,77 @@
 .joinInput,
 .joinInput:focus {
 	padding: 0.75rem 1rem;
-	margin: 1rem 0;
+	margin: 1rem 1.5rem;
 	border-width: 0;
 	border-bottom-width: 3px;
 	border-color: steelblue;
 	width: 250px;
+	outline: none;
 }
 .button {
-	padding: 1.2rem 2.2rem;
+	padding: 0.9rem 2.2rem;
 	background-color: slateblue;
 	margin-top: 2rem;
-	border-radius: 2rem;
+	border-radius: 0.5rem;
 	border: none;
 	margin-left: 4.5rem;
 	overflow: hidden;
 	color: whitesmoke;
 	font-size: 16px;
 	text-transform: uppercase;
+	box-shadow: 0 0 8px 8px #f1f0f0;
+	margin: 2rem auto;
+	transition: all 0.2s ease-in;
+	cursor: pointer;
+}
+
+.button:hover {
+	background-color: rgb(53, 36, 170);
+	color: #fff;
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.form-image {
+	background: #333;
+	/* no-repeat center center cover; */
+}
+
+.mt-20 {
+	margin-top: 28px;
+}
+.row {
+	display: flex;
+	flex-direction: row;
+}
+
+.center {
+	align-items: center;
+	justify-content: center;
+	margin: 0.75rem;
+}
+.center img {
+	margin-right: 1rem;
+}
+.hairline {
+	margin: 1rem 0;
+	width: 50%;
+}
+.text-center {
+	text-align: center;
+}
+.id-field {
+	display: block;
+	padding: 1rem 2.2rem;
+	color: slateblue;
+	background-color: rgb(221, 217, 217);
+	border-radius: 1rem;
+	margin: 1rem;
 }
 
 @keyframes animateBox {

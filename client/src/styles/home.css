@@ -55,6 +55,12 @@
 	text-transform: uppercase;
 }
 
+.actions {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+
 .new-btn {
 	background-image: linear-gradient(
 		to top,
@@ -82,12 +88,25 @@
 	border-radius: 12px;
 	color: slateblue;
 	background-color: #fff;
+	text-decoration: none;
 }
 .btn-link:hover {
-	transform: scale(1.1);
+	box-shadow: 0 0 10px 10px #e6e3e3;
 }
 @media (max-width: 500px) {
 	.main_content {
 		flex-direction: column-reverse;
+	}
+	.actions {
+		flex-direction: column;
+		align-items: center;
+		justify-content: space-around;
+	}
+
+	.actions .btn {
+		width: 50%;
+	}
+	.btn-link {
+		font-size: 14px;
 	}
 }
