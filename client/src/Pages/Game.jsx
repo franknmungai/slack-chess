@@ -10,7 +10,7 @@ import {
 	makeMove,
 	highlightPossibleMoves,
 } from '../functions/game';
-import '../App.css';
+import '../styles/game.css';
 import Cell from '../components/Cell';
 import GameOver from '../components/GameOver';
 import {
@@ -23,7 +23,7 @@ import {
 	IN_DRAW,
 } from '../store/AppReducer';
 import Captured from '../components/Captured';
-import NavBar from '../components/NavBar';
+import AppBar from '../components/AppBar';
 
 const SOCKET_SERVER = 'localhost:4000';
 let socket = io(SOCKET_SERVER);
@@ -179,7 +179,7 @@ const App = (props) => {
 
 	return (
 		<>
-			<NavBar />
+			<AppBar />
 			{!gameOver ? (
 				<div className="game">
 					<Captured color="b" pieces={capturedPieces} />

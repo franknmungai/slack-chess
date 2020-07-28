@@ -1,21 +1,25 @@
 .game {
 	display: grid;
-	padding: 1rem;
+	padding: 0rem;
 	grid-template-columns: 0.5fr 6fr 0.5fr;
 	background: url('../images/castle-4690710_1920.jpg');
 	background-color: #444;
 }
 .board {
 	padding: 1rem;
-	margin: 3.5rem auto; /** centered */
+	margin: 0 auto; /** centered */
 	border-radius: 12px;
-	box-shadow: 4px 4px 15px #e0dfdf;
-	max-width: 700px;
-	min-width: 500px;
-	/* height: 90vh; */
+	box-shadow: 0 0 8px 8px #f0efef;
+	/* max-width: 700px;
+	min-width: 500px; */
+	/* height: 500px; */
+	width: calc(100vh * 1.1);
+	height: calc(100vh * 0.85);
 	display: grid;
 	grid-template-columns: repeat(8, 1fr);
 	background-color: burlywood;
+	margin-top: 1rem;
+	/* box-sizing: content-box; */
 }
 
 .piece {
@@ -24,8 +28,8 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: 77px;
-	height: 60px;
+	width: calc((100vh * 0.8) / 7);
+	height: calc((100vh * 0.8) / 8.9);
 }
 
 .light {
