@@ -23,6 +23,7 @@ import {
 	IN_DRAW,
 } from '../store/AppReducer';
 import Captured from '../components/Captured';
+import NavBar from '../components/NavBar';
 
 const SOCKET_SERVER = 'localhost:4000';
 let socket = io(SOCKET_SERVER);
@@ -178,6 +179,7 @@ const App = (props) => {
 
 	return (
 		<>
+			<NavBar />
 			{!gameOver ? (
 				<div className="game">
 					<Captured color="b" pieces={capturedPieces} />
