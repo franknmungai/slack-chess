@@ -42,7 +42,7 @@ const Home = (props) => {
 			<div className="row center m-1">
 				{icons.map((icon) => (
 					<Tooltip title={icon.text} style={{ marginRight: '1rem' }}>
-						<a href={icon.link} target="_blank">
+						<a href={icon.link} target="_blank" rel="noopener noreferrer">
 							{icon.icon}
 						</a>
 					</Tooltip>
@@ -71,6 +71,7 @@ const Home = (props) => {
 							className="btn m-1 btn-link"
 							href={icons[0].link}
 							target="_blank"
+							rel="noopener noreferrer"
 						>
 							How to play chess
 						</a>

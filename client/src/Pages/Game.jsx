@@ -82,9 +82,10 @@ const App = (props) => {
 	}, []);
 
 	useEffect(() => {
-		socket.on('opponent:join', (message) => {
+		socket.on('opponentJoin', (message) => {
 			setToast(message.text);
 			setOpponent(message.name);
+			alert(message.name);
 		});
 	}, []);
 
@@ -195,7 +196,7 @@ const App = (props) => {
 
 	return (
 		<>
-			<AppBar name={opponent} />
+			<AppBar opponentName={opponent} playerColor={playerColor} />
 			{!gameOver ? (
 				<div className="game">
 					<Captured color="b" pieces={capturedPieces} />

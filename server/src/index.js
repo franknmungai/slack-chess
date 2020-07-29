@@ -42,9 +42,9 @@ io.on('connection', (socket) => {
 		});
 
 		// Tell player2 that player1 has joined the game
-		socket.broadcast.to(player.game).emit('opponent:join', {
+		socket.broadcast.to(player.game).emit('opponentJoin', {
 			text: `${name} has joined the game. `,
-			name,
+			name: player.name,
 		});
 
 		// Start the game once its full

@@ -9,7 +9,7 @@ const Cell = (props) => {
 	// Check turn and color to see if a piece should be draggable. not draggable if, 1 its not your turn, 2 its not your color
 	const draggable =
 		props.color === props.playerColor && props.playerTurn === props.color;
-
+	//
 	return (
 		<div
 			className={`piece ${props.light ? 'light' : 'dark'} ${
