@@ -4,12 +4,12 @@ import Piece from './Piece';
 
 const Cell = (props) => {
 	const divCell = useRef();
-
+	const isLastOpponentMove = props.lastOpponentMove.includes(props.pos);
 	return (
 		<div
 			className={`piece ${props.light ? 'light' : 'dark'} ${
 				props.isPossibleMove ? 'possible-move' : ''
-			}`}
+			} ${isLastOpponentMove ? 'last_opponent_move' : ''}`}
 			ref={divCell}
 			onDragOver={(event) => event.preventDefault()}
 			onDrop={() => props.onDrop(props.pos)} //Get the position of the cell we drop at

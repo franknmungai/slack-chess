@@ -1,4 +1,3 @@
-// Join form
 import '../styles/join.css';
 import React, { useState, useEffect } from 'react';
 import Dialog from '@material-ui/core/Dialog';
@@ -7,12 +6,12 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import formImage from '../images/form-image.jpg';
 import { useHistory } from 'react-router-dom';
 
+// Join form
 const Join = (props) => {
 	const [name, setName] = useState('');
 	const [gameId, setgameId] = useState('');
 	const [sentInvite, setSentInvite] = useState(false);
 	const mobile = useMediaQuery('(max-width: 500px)');
-	console.log('Matches', mobile);
 	const { invite, open, onClose } = props;
 
 	useEffect(() => {
@@ -22,7 +21,6 @@ const Join = (props) => {
 			setSentInvite(true);
 		} else {
 			const id = Math.random().toString().replace('0.', '');
-			console.log(id);
 			setgameId(id);
 		}
 	}, [invite]);

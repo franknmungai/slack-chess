@@ -48,6 +48,10 @@
 	box-shadow: -2px -2px inset goldenrod, goldenrod 2px 2px inset;
 }
 
+.last_opponent_move {
+	background: rgba(233, 245, 69, 0.9);
+}
+
 .captured__column {
 	display: flex;
 	flex-direction: column;

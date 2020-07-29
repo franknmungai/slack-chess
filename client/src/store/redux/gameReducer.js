@@ -4,6 +4,7 @@ const initialState = {
 	opponentName: '',
 	currentPlayerTurn: '',
 	savedGameFEN: '',
+	toast: '',
 };
 
 const GameReducer = (state = initialState, action) => {
@@ -16,6 +17,8 @@ const GameReducer = (state = initialState, action) => {
 			return { ...state, currentPlayerTurn: action.turn };
 		case Types.SET_SAVED_GAME_FEN:
 			return { ...state, savedGameFEN: action.turn };
+		case Types.SET_TOAST:
+			return { ...state, toast: action.message };
 		default:
 			return { ...state };
 	}

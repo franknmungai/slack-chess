@@ -50,20 +50,24 @@ const App = (props) => {
 
 	const playerColor = useRef();
 
+	// Game controls
+	const [opponent, setOpponent] = useState('');
+	const [playerTurn, setPlayerTurn] = useState();
+	const [toast, setToast] = useState('');
+	const [lastOpponentMove, setLastOpponentMove] = useState({});
+
 	useEffect(() => {
 		const { id, name } = qs.parse(props.location.search);
 		socket.emit('join', { name, game: id }, ({ error, color }) => {
 			// /we get an error or a color if the player was added successfully
 
-			if (error) alert(error);
+			if (error) setToast(error);
 
 			if (color) {
 				const message = `You have been assigned to ${
 					color === 'w' ? 'white' : 'black'
 				}`;
-
-				alert(message);
-
+				setToast(message);
 				// Set the turn
 				playerColor.current = color;
 			}
@@ -78,31 +82,29 @@ const App = (props) => {
 
 	useEffect(() => {
 		socket.on('opponentMove', ({ piece, fromPos, toPos }) => {
-			console.log({ piece, fromPos, toPos });
-			console.log('opponentMove', chess.turn());
 			const data = chess.move(`${fromPos}-${toPos}`, { sloppy: true });
 			console.log('Move data ', data);
-			setFen(chess.fen()); //update the state with our new fen notation
-			console.log('opponentMove', chess.turn());
-			// if (data.captured) {
-			// 	setCapturedPieces((state) => [
-			// 		...state,
-			// 		{
-			// 			player, //w (color)
-			// 			captured: data.captured, //B  (piece)
-			// 		},
-			// 	]);
-			// }
+			if (data) {
+				//if the move was successful
+				setFen(chess.fen()); //update the state with our new fen notation
+				setLastOpponentMove({ fromPos, toPos });
+
+				// if (data.captured) {
+				// 	setCapturedPieces((state) => [
+				// 		...state,
+				// 		{
+				// 			player, //w (color)
+				// 			captured: data.captured, //B  (piece)
+				// 		},
+				// 	]);
+				// }
+			}
 
 			gameOverCheck();
 		});
 	}, []);
 
 	const onDragStartHandler = (piece, pos) => {
-		if (chess.turn() !== playerColor.current) {
-			// return;
-		}
-
 		//sets the currenty playing piece and position
 		currentPlaying.current = piece;
 		fromPos.current = pos;
@@ -174,6 +176,7 @@ const App = (props) => {
 				//position player drops piece
 				onDropHandler(pos);
 			}}
+			lastOpponentMove={Object.values(lastOpponentMove)}
 		/>
 	));
 

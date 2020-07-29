@@ -7,12 +7,12 @@ import store from './store/redux';
 
 const App = () => {
 	return (
-		<Provider store={store}>
-			<Router>
-				<Route path="/" exact component={Home} />
-				<Route path="/game" component={Game} />
-			</Router>
-		</Provider>
+		// <Provider store={store}>
+		<Router>
+			<Route path="/" exact component={Home} />
+			<Route path="/game" component={Game} />
+		</Router>
+		// </Provider>
 	);
 };
 
