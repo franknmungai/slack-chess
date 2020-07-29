@@ -5,6 +5,11 @@ import Piece from './Piece';
 const Cell = (props) => {
 	const divCell = useRef();
 	const isLastOpponentMove = props.lastOpponentMove.includes(props.pos);
+
+	// Check turn and color to see if a piece should be draggable. not draggable if, 1 its not your turn, 2 its not your color
+	const draggable =
+		props.color === props.playerColor && props.playerTurn === props.color;
+
 	return (
 		<div
 			className={`piece ${props.light ? 'light' : 'dark'} ${
@@ -20,6 +25,7 @@ const Cell = (props) => {
 					color={props.color}
 					pos={props.pos}
 					onDragStart={(piece, pos) => props.onDragStart(piece, pos)} //will be called with two params: pass them to parent
+					draggable={draggable}
 				/>
 			</span>
 		</div>
@@ -33,6 +39,9 @@ Cell.propTypes = {
 	pos: PropTypes.string.isRequired, // e1
 	onDragStart: PropTypes.func.isRequired,
 	onDrop: PropTypes.func.isRequired,
+	lastOpponentMove: PropTypes.array,
+	playerColor: PropTypes.string,
+	playerTurn: PropTypes.string,
 };
 
 export default Cell;

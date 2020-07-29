@@ -14,7 +14,7 @@ const Piece = (props) => {
 		<img
 			width="75%"
 			height="75%"
-			draggable="true" //opponent pieces are not editable. Out of turn players have editable=false
+			draggable={props.draggable} //opponent pieces are not draggable. Out of turn players have editable=false
 			src={getPieceImage(nameExpression)}
 			alt=""
 			ref={element}

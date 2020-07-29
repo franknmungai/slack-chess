@@ -57,6 +57,7 @@ const Join = (props) => {
 						src={formImage}
 						height={`${mobile ? '25%' : '100%'}`}
 						width="100%"
+						alt="invite"
 					/>
 				</Grid>
 				<Grid item xs={12} sm={12} md={6} lg={6}>
@@ -88,7 +89,10 @@ const Join = (props) => {
 							/>
 						) : (
 							<h3 className="text-center">
-								Hey, care to join me for my chess game? 😄
+								Hey, care to join me for my chess game?{' '}
+								<span role="img" aria-label="smile">
+									😄
+								</span>
 							</h3>
 						)}
 						<button type="submit" className="button mt-20">
@@ -111,6 +115,7 @@ const ShareButtons = (props) => {
 					href={`https://api.whatsapp.com/send?text=${shareText}`}
 					target="_blank"
 					onClick={onClick}
+					rel="noopener noreferrer"
 				>
 					<img src="https://img.icons8.com/color/48/000000/whatsapp.png" />
 				</a>
@@ -119,6 +124,7 @@ const ShareButtons = (props) => {
 						subject
 					)}&body=${encodeURI(shareText)}`}
 					onClick={onClick}
+					rel="noopener noreferrer"
 				>
 					<img src="https://img.icons8.com/fluent/48/000000/gmail.png" />
 				</a>
@@ -127,6 +133,7 @@ const ShareButtons = (props) => {
 					class="twitter-dm-button"
 					target="_blank"
 					onClick={onClick}
+					rel="noopener noreferrer"
 				>
 					<img src="https://img.icons8.com/fluent/48/000000/twitter.png" />
 				</a>

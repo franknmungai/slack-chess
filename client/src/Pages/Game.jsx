@@ -48,11 +48,11 @@ const App = (props) => {
 
 	const [gameOverState, dispatch] = useReducer(gameOverReducer, initialState);
 
-	const playerColor = useRef();
+	const [playerColor, setPlayerColor] = useState('');
 
 	// Game controls
 	const [opponent, setOpponent] = useState('');
-	const [playerTurn, setPlayerTurn] = useState();
+	const [playerTurn, setPlayerTurn] = useState('w');
 	const [toast, setToast] = useState('');
 	const [lastOpponentMove, setLastOpponentMove] = useState({});
 
@@ -68,8 +68,8 @@ const App = (props) => {
 					color === 'w' ? 'white' : 'black'
 				}`;
 				setToast(message);
-				// Set the turn
-				playerColor.current = color;
+				// Set the player color
+				setPlayerColor(color);
 			}
 		});
 	}, []);
@@ -77,6 +77,14 @@ const App = (props) => {
 	useEffect(() => {
 		socket.on('message', (message) => {
 			console.log(message);
+			setToast(message.text);
+		});
+	}, []);
+
+	useEffect(() => {
+		socket.on('opponent:join', (message) => {
+			setToast(message.text);
+			setOpponent(message.name);
 		});
 	}, []);
 
@@ -88,21 +96,21 @@ const App = (props) => {
 				//if the move was successful
 				setFen(chess.fen()); //update the state with our new fen notation
 				setLastOpponentMove({ fromPos, toPos });
-
-				// if (data.captured) {
-				// 	setCapturedPieces((state) => [
-				// 		...state,
-				// 		{
-				// 			player, //w (color)
-				// 			captured: data.captured, //B  (piece)
-				// 		},
-				// 	]);
-				// }
+				setPlayerTurn(chess.turn()); //update the turn
+				if (data.captured) {
+					setCapturedPieces((state) => [
+						...state,
+						{
+							player: data.color === 'w' ? 'b' : 'w', //w (color) who got captured
+							captured: data.captured, //B  (piece)
+						},
+					]);
+				}
 			}
 
 			gameOverCheck();
 		});
-	}, []);
+	}, [chess]);
 
 	const onDragStartHandler = (piece, pos) => {
 		//sets the currenty playing piece and position
@@ -115,15 +123,18 @@ const App = (props) => {
 
 	const onDropHandler = (pos) => {
 		toPos.current = pos; //set the position we want to move to
-		const { captured, player } = makeMove(
+		const data = makeMove(
 			chess,
 			currentPlaying.current,
 			fromPos.current,
 			toPos.current
 		);
+		if (!data) return; //invalid move
+		const { captured, player } = data;
 		setFen(chess.fen()); //update the state with our new fen notation
 		setPossibleMoves([]);
-
+		setLastOpponentMove({});
+		setPlayerTurn(chess.turn());
 		if (captured) {
 			setCapturedPieces(
 				capturedPieces.concat({
@@ -177,12 +188,14 @@ const App = (props) => {
 				onDropHandler(pos);
 			}}
 			lastOpponentMove={Object.values(lastOpponentMove)}
+			playerColor={playerColor} //to ensure you can only move your piece colors
+			playerTurn={playerTurn}
 		/>
 	));
 
 	return (
 		<>
-			<AppBar />
+			<AppBar name={opponent} />
 			{!gameOver ? (
 				<div className="game">
 					<Captured color="b" pieces={capturedPieces} />
