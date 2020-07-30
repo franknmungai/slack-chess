@@ -59,8 +59,7 @@ const App = (props) => {
 	useEffect(() => {
 		const { id, name } = qs.parse(props.location.search);
 		socket.emit('join', { name, game: id }, ({ error, color }) => {
-			// /we get an error or a color if the player was added successfully
-
+			// we get an error or a color if the player was added successfully
 			if (error) setToast(error);
 
 			if (color) {
@@ -78,6 +77,10 @@ const App = (props) => {
 		socket.on('message', (message) => {
 			console.log(message);
 			setToast(message.text);
+			if (message.opponent) {
+				console.log(message.opponent);
+				setOpponent(message.opponent.name);
+			}
 		});
 	}, []);
 
@@ -85,7 +88,6 @@ const App = (props) => {
 		socket.on('opponentJoin', (message) => {
 			setToast(message.text);
 			setOpponent(message.name);
-			alert(message.name);
 		});
 	}, []);
 

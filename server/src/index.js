@@ -39,9 +39,7 @@ io.on('connection', (socket) => {
 		//send welcome message to player1, and also send the opponent player's data
 		socket.emit('message', {
 			text: `Hello ${player.name}, Welcome to the game`,
-			opponentPlayer: getPlayersInGame(_player.game).find(
-				(pl) => pl.color !== _player.color
-			),
+			opponent: getPlayersInGame(game).find((pl) => pl.id !== _player.id),
 		});
 
 		// Tell player2 that player1 has joined the game.

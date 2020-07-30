@@ -59,3 +59,12 @@
 	flex-wrap: wrap;
 	height: 90vh;
 }
+
+.online {
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background-color: lawngreen;
+	display: inline-block;
+	margin-left: 10px;
+}

@@ -5,10 +5,10 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import Tooltip from '@material-ui/core/Tooltip';
+import TypedText from '../components/TypedText';
 import HomeSvg from '../images/home.svg';
 import '../styles/home.css';
 import '../styles/home-bg.css';
-import TypedText from '../components/TypedText';
 
 const Home = (props) => {
 	const [openDialog, setOpenDialog] = useState(false);

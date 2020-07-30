@@ -105,11 +105,15 @@ const Join = (props) => {
 	);
 };
 
-const ShareButtons = (props) => {
+export const ShareButtons = (props) => {
 	const { onClick, shareText, subject } = props;
 	return (
 		<React.Fragment>
-			<h2>Invite your friend over</h2>
+			{!props.headingSmall ? (
+				<h2>Invite your friend over</h2>
+			) : (
+				<h5 style={{ textAlign: 'center' }}>Invite your friend over</h5>
+			)}
 			<div className="row center">
 				<a
 					href={`https://api.whatsapp.com/send?text=${shareText}`}
@@ -130,7 +134,6 @@ const ShareButtons = (props) => {
 				</a>
 				<a
 					href={`https://twitter.com/messages/compose?recipient_id=&text=${shareText}`}
-					class="twitter-dm-button"
 					target="_blank"
 					onClick={onClick}
 					rel="noopener noreferrer"
