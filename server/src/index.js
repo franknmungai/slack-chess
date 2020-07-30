@@ -36,12 +36,15 @@ io.on('connection', (socket) => {
 		socket.join(game);
 		callback({ color: _player.color }); //send the color back to the client
 
-		//send welcome message to player1
+		//send welcome message to player1, and also send the opponent player's data
 		socket.emit('message', {
 			text: `Hello ${player.name}, Welcome to the game`,
+			opponentPlayer: getPlayersInGame(_player.game).find(
+				(pl) => pl.color !== _player.color
+			),
 		});
 
-		// Tell player2 that player1 has joined the game
+		// Tell player2 that player1 has joined the game.
 		socket.broadcast.to(player.game).emit('opponentJoin', {
 			text: `${name} has joined the game. `,
 			name: player.name,
