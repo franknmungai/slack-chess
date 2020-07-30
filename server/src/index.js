@@ -11,10 +11,12 @@ const {
 	players,
 } = require('./players');
 
+const { saveGameHandler } = require('./routes/save-game');
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(saveGameHandler);
 
 const server = http.createServer(app);
 const io = socketio(server);
@@ -71,8 +73,10 @@ io.on('connection', (socket) => {
 
 		if (player) {
 			io.to(player.game).emit('message', {
-				text: `${player.name} has left the game. The game has been automatically saved and you can resume later when you wish`,
+				text: `${player.name} has left the game. You can save the game and resume later when you wish`,
 			});
+			socket.broadcast.to(player.game).emit('OpponentLeft');
+			console.log(`${player.name} has left the game ${player.id}`);
 		}
 	});
 });
