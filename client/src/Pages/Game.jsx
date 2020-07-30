@@ -24,6 +24,7 @@ import {
 } from '../store/AppReducer';
 import Captured from '../components/Captured';
 import AppBar from '../components/AppBar';
+import Toast from '../components/Toast';
 
 const SOCKET_SERVER = 'localhost:4000';
 let socket = io(SOCKET_SERVER);
@@ -55,6 +56,7 @@ const App = (props) => {
 	const [playerTurn, setPlayerTurn] = useState('w');
 	const [toast, setToast] = useState('');
 	const [lastOpponentMove, setLastOpponentMove] = useState({});
+	const [disconnected, setDisconnected] = useState(false);
 
 	useEffect(() => {
 		const { id, name } = qs.parse(props.location.search);
@@ -75,7 +77,6 @@ const App = (props) => {
 
 	useEffect(() => {
 		socket.on('message', (message) => {
-			console.log(message);
 			setToast(message.text);
 			if (message.opponent) {
 				console.log(message.opponent);
@@ -95,25 +96,29 @@ const App = (props) => {
 		socket.on('opponentMove', ({ piece, fromPos, toPos }) => {
 			const data = chess.move(`${fromPos}-${toPos}`, { sloppy: true });
 			console.log('Move data ', data);
-			if (data) {
-				//if the move was successful
-				setFen(chess.fen()); //update the state with our new fen notation
-				setLastOpponentMove({ fromPos, toPos });
-				setPlayerTurn(chess.turn()); //update the turn
-				if (data.captured) {
-					setCapturedPieces((state) => [
-						...state,
-						{
-							player: data.color === 'w' ? 'b' : 'w', //w (color) who got captured
-							captured: data.captured, //B  (piece)
-						},
-					]);
-				}
-			}
+			if (!data) return;
 
+			//if the move was successful
+			setFen(chess.fen()); //update the state with our new fen notation
+			setLastOpponentMove({ fromPos, toPos });
+			setPlayerTurn(chess.turn()); //update the turn
+			if (data.captured) {
+				setCapturedPieces((state) => [
+					...state,
+					{
+						player: data.color === 'w' ? 'b' : 'w', //w (color) who got captured
+						captured: data.captured, //B  (piece)
+					},
+				]);
+			}
+			setToast(`Now it's your turn ${qs.parse(props.location.search).name}`);
 			gameOverCheck();
 		});
 	}, [chess]);
+
+	useEffect(() => {
+		socket.on('OpponentLeft', () => setDisconnected(true));
+	}, []);
 
 	const onDragStartHandler = (piece, pos) => {
 		//sets the currenty playing piece and position
@@ -138,6 +143,7 @@ const App = (props) => {
 		setPossibleMoves([]);
 		setLastOpponentMove({});
 		setPlayerTurn(chess.turn());
+		setToast('');
 		if (captured) {
 			setCapturedPieces(
 				capturedPieces.concat({
@@ -198,12 +204,17 @@ const App = (props) => {
 
 	return (
 		<>
-			<AppBar opponentName={opponent} playerColor={playerColor} />
+			<AppBar
+				opponentName={opponent}
+				playerColor={playerColor}
+				disconnected={disconnected}
+			/>
 			{!gameOver ? (
 				<div className="game">
 					<Captured color="b" pieces={capturedPieces} />
 					<Board>{markup}</Board>
 					<Captured color="w" pieces={capturedPieces} />
+					<Toast open={!!toast} message={toast} onClose={() => setToast('')} />
 				</div>
 			) : (
 				<GameOver gameOverState={gameOverState} />

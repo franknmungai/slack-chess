@@ -46,7 +46,7 @@ const GameBar = (props) => {
 	const classes = useStyles();
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [popperOpen, setPopperOpen] = useState(false);
-	const { playerColor, opponentName } = props;
+	const { playerColor, opponentName, disconnected } = props;
 	const opponentColor = playerColor === 'w' ? 'Black' : 'White';
 	const color = playerColor === 'w' ? 'White' : 'Black';
 	const name = opponentName.slice(0, 2).toUpperCase();
@@ -79,7 +79,7 @@ const GameBar = (props) => {
 							<>
 								<Avatar style={{ background: deepPurple[500] }}>{name}</Avatar>
 								<div>
-									<span className="online" />
+									<span className={disconnected ? 'offline' : 'online'} />
 									<span className={classes.playerSpan}>{opponentColor}</span>
 								</div>
 							</>

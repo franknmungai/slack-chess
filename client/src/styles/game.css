@@ -68,3 +68,11 @@
 	display: inline-block;
 	margin-left: 10px;
 }
+.offline {
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background-color: crimson;
+	display: inline-block;
+	margin-left: 10px;
+}
