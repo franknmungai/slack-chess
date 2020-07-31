@@ -199,6 +199,7 @@ const App = (props) => {
 			lastOpponentMove={Object.values(lastOpponentMove)}
 			playerColor={playerColor} //to ensure you can only move your piece colors
 			playerTurn={playerTurn}
+			inCheck={chess.in_check()}
 		/>
 	));
 

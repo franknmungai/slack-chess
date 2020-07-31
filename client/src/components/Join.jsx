@@ -28,7 +28,7 @@ const Join = (props) => {
 	const history = useHistory();
 	const onSubmitHandler = (event) => {
 		event.preventDefault();
-		if (name && sentInvite) {
+		if (name) {
 			history.push(`/game?name=${name}&id=${gameId}`);
 		}
 	};

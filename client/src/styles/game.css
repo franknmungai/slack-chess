@@ -43,7 +43,9 @@
 	/*hide piece from its original pos on drag start*/
 	display: none;
 }
-
+.check {
+	background-color: rgba(247, 44, 84, 0.9);
+}
 .possible-move {
 	box-shadow: -2px -2px inset goldenrod, goldenrod 2px 2px inset;
 }

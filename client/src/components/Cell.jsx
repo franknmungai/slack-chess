@@ -10,11 +10,16 @@ const Cell = (props) => {
 	const draggable =
 		props.color === props.playerColor && props.playerTurn === props.color;
 	//
+	const alertCheck =
+		props.inCheck && props.piece.toLowerCase() === 'k' && draggable;
+
 	return (
 		<div
 			className={`piece ${props.light ? 'light' : 'dark'} ${
 				props.isPossibleMove ? 'possible-move' : ''
-			} ${isLastOpponentMove ? 'last_opponent_move' : ''}`}
+			} ${isLastOpponentMove ? 'last_opponent_move' : ''} ${
+				alertCheck ? 'check' : ''
+			}`}
 			ref={divCell}
 			onDragOver={(event) => event.preventDefault()}
 			onDrop={() => props.onDrop(props.pos)} //Get the position of the cell we drop at
