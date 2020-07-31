@@ -11,7 +11,7 @@ import { ShareButtons } from './Join';
 import Popper from '@material-ui/core/Popper';
 import Fade from '@material-ui/core/Fade';
 import Paper from '@material-ui/core/Paper';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import qs from 'qs';
 import '../styles/game.css';
 
@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
 	appBar: {
 		background: ' rgba(0,0,0,0.9)',
 		padding: '0.2rem',
+		width: '100vw',
 	},
 	toolbar: {
 		alignItems: 'flex-start',
@@ -54,10 +55,14 @@ const GameBar = (props) => {
 		setAnchorEl(event.currentTarget);
 		setPopperOpen((state) => !state);
 	};
-	// console.log();
+	const mobile = useMediaQuery('(max-width: 500px)');
 	return (
 		<div className={classes.root}>
-			<AppBar position="static" className={classes.appBar}>
+			<AppBar
+				position="static"
+				className={classes.appBar}
+				style={{ width: mobile ? '150vw' : '100vw' }}
+			>
 				<Toolbar className={classes.toolbar}>
 					<IconButton
 						edge="start"
