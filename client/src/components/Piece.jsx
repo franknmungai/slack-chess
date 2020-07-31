@@ -17,8 +17,11 @@ const Piece = (props) => {
 			0
 		);
 	};
-
 	const dragEndHandler = () => (element.current.style.display = 'inline');
+	const touchStartHandler = (event) => {
+		event.preventDefault(); //prevent scroll
+		props.onDragStart(props.piece, props.pos);
+	};
 	return (
 		<img
 			width="75%"
@@ -30,7 +33,7 @@ const Piece = (props) => {
 			onDragStart={dragStartHandler}
 			onDragEnd={dragEndHandler}
 			// For mobile apps
-			onTouchStart={dragStartHandler}
+			onTouchStart={touchStartHandler}
 			onTouchEnd={dragEndHandler}
 			onTouchMove={dragEndHandler}
 			onTouchMoveCapture={dragEndHandler}

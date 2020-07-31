@@ -2,6 +2,7 @@ const http = require('http');
 const socketio = require('socket.io');
 const express = require('express');
 const cors = require('cors');
+const mongoose = require('mongoose');
 const {
 	addPlayer,
 	getPlayerColor,
@@ -23,7 +24,7 @@ const io = socketio(server);
 
 const PORT = process.env.PORT || 4000;
 
-// Event types --> Message(sends messages to players about moves and turns), Move(sends a FEN code of the opponents move)
+// Event types --> Message(sends messages to players about moves and turns), Move(sends the opponents move)
 io.on('connection', (socket) => {
 	socket.on('join', ({ name, game }, callback) => {
 		console.log(`${name} has joined the game ${game}`);
@@ -81,4 +82,13 @@ io.on('connection', (socket) => {
 	});
 });
 
-server.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
+const start = async () => {
+	await mongoose.connect('mongodb://127.0.0.1:27017/slack-chess', {
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+		useCreateIndex: true,
+	});
+	server.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
+};
+
+start();
