@@ -61,7 +61,7 @@ const GameBar = (props) => {
 			<AppBar
 				position="static"
 				className={classes.appBar}
-				style={{ width: mobile ? '150vw' : '100vw' }}
+				style={{ width: mobile ? '150vw' : '100%' }}
 			>
 				<Toolbar className={classes.toolbar}>
 					<IconButton

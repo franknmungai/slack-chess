@@ -13,6 +13,9 @@ const Cell = (props) => {
 	const alertCheck =
 		props.inCheck && props.piece.toLowerCase() === 'k' && draggable;
 
+	//Get the position of the cell we drop at
+	const dropHandler = () => props.onDrop(props.pos);
+
 	return (
 		<div
 			className={`piece ${props.light ? 'light' : 'dark'} ${
@@ -22,7 +25,9 @@ const Cell = (props) => {
 			}`}
 			ref={divCell}
 			onDragOver={(event) => event.preventDefault()}
-			onDrop={() => props.onDrop(props.pos)} //Get the position of the cell we drop at
+			onDrop={dropHandler}
+			onTouchEnd={dropHandler} //mobile
+			onTouchMove={() => {}}
 		>
 			<span>
 				<Piece

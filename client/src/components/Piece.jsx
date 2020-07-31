@@ -10,6 +10,15 @@ const Piece = (props) => {
 		props.color
 	}${props.piece.toString().toUpperCase()}`; //e.g bK -- black king
 
+	const dragStartHandler = (event) => {
+		props.onDragStart(props.piece, props.pos); //Pass data to main component
+		setTimeout(
+			() => (element.current.style.display = 'none'), //hide element
+			0
+		);
+	};
+
+	const dragEndHandler = () => (element.current.style.display = 'inline');
 	return (
 		<img
 			width="75%"
@@ -18,17 +27,13 @@ const Piece = (props) => {
 			src={getPieceImage(nameExpression)}
 			alt=""
 			ref={element}
-			onDragStart={(event) => {
-				props.onDragStart(props.piece, props.pos); //Pass data to main component
-				setTimeout(
-					() => (element.current.style.display = 'none'), //hide element
-					5
-				);
-			}}
-			onDrop={() => {
-				// props.onDrop(props.)
-			}}
-			onDragEnd={() => (element.current.style.display = 'inline')}
+			onDragStart={dragStartHandler}
+			onDragEnd={dragEndHandler}
+			// For mobile apps
+			onTouchStart={dragStartHandler}
+			onTouchEnd={dragEndHandler}
+			onTouchMove={dragEndHandler}
+			onTouchMoveCapture={dragEndHandler}
 		/>
 	);
 };

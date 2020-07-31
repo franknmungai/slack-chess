@@ -91,7 +91,7 @@
 		width: calc(100vw);
 		height: calc(100vw * 1.2);
 		flex: 0.8;
-		margin-top: -20rem;
+		margin-top: -10rem;
 	}
 
 	.piece {
