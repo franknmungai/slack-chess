@@ -9,27 +9,28 @@ const {
 	getPlayersInGame,
 	removePlayer,
 	getPlayer,
-	players,
 } = require('./players');
 
 const { saveGameHandler } = require('./routes/save-game');
+const { fetchGameHandler } = require('./routes/fetch-game');
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use(saveGameHandler);
+app.use(fetchGameHandler);
 
 const server = http.createServer(app);
 const io = socketio(server);
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT;
 
 // Event types --> Message(sends messages to players about moves and turns), Move(sends the opponents move)
 io.on('connection', (socket) => {
 	socket.on('join', ({ name, game }, callback) => {
 		console.log(`${name} has joined the game ${game}`);
 		const player = { name, game, id: socket.id };
-		const { error, player: _player } = addPlayer(player);
+		const { error, _player } = addPlayer(player);
 
 		if (error) {
 			callback({ error }); //game is full error
@@ -83,7 +84,7 @@ io.on('connection', (socket) => {
 });
 
 const start = async () => {
-	await mongoose.connect('mongodb://127.0.0.1:27017/slack-chess', {
+	await mongoose.connect(`${process.env.MONGODB_URL}`, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 		useCreateIndex: true,

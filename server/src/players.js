@@ -20,7 +20,7 @@ const addPlayer = (player) => {
 
 	players.push(_player);
 
-	return { player: _player };
+	return { _player };
 };
 
 // Returns a specific player in a game, returns the black or white in a game

@@ -19,6 +19,10 @@ const schema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
+		gameID: {
+			type: String,
+			required: true,
+		},
 	},
 	{
 		toJSON: {
