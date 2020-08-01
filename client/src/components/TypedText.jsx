@@ -8,6 +8,8 @@ const TypedText = (props) => {
 	const textContent = useRef(Array.from(props.text));
 	const [text, setText] = useState('');
 
+	const speed = props.speed || 500;
+	const loop = typeof props.loop === 'undefined' ? true : props.loop;
 	useEffect(() => {
 		const timer = setInterval(() => {
 			const lastCharIndex = text.length - 1;
@@ -16,11 +18,11 @@ const TypedText = (props) => {
 				//text is empty
 				setText(textContent.current[0]);
 			} else if (lastCharIndex + 1 === textContent.current.length) {
-				setText('');
+				loop && setText('');
 			} else {
 				setText((text) => text.concat(textContent.current[lastCharIndex + 1]));
 			}
-		}, 500);
+		}, speed);
 
 		return () => clearInterval(timer);
 	}, [text]);
@@ -30,6 +32,8 @@ const TypedText = (props) => {
 
 TypedText.propTypes = {
 	text: PropTypes.string.isRequired,
+	speed: PropTypes.number,
+	loop: PropTypes.bool,
 };
 
 export default TypedText;

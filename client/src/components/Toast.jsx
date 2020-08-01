@@ -7,7 +7,7 @@ const Toast = (props) => {
 			anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
 			open={props.open}
 			onClose={props.onClose}
-			autoHideDuration={2500}
+			autoHideDuration={3000}
 			message={props.message}
 		/>
 	);

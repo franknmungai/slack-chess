@@ -1,0 +1,23 @@
+h1 {
+	text-align: center;
+	margin: 1.5rem 0;
+}
+
+.endClause {
+	font-size: 18px;
+}
+
+.message {
+	font-size: 16;
+}
+
+.type-writer {
+	font-size: 24px;
+	text-align: center;
+}
+
+.center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

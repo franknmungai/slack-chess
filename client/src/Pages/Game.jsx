@@ -210,7 +210,7 @@ const App = (props) => {
 				playerColor={playerColor}
 				disconnected={disconnected}
 			/>
-			{!gameOver ? (
+			{gameOver ? (
 				<div className="game">
 					<Captured color="b" pieces={capturedPieces} />
 					<Board>{markup}</Board>
@@ -218,7 +218,12 @@ const App = (props) => {
 					<Toast open={!!toast} message={toast} onClose={() => setToast('')} />
 				</div>
 			) : (
-				<GameOver gameOverState={gameOverState} />
+				<GameOver
+					gameOverState={gameOverState}
+					checkmated={chess.in_checkmate()}
+					playerColor={playerColor}
+					playerTurn={playerTurn}
+				/>
 			)}
 		</>
 	);
