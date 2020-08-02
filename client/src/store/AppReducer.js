@@ -9,7 +9,7 @@ export const initialState = {
 	in_stalemate: false,
 	in_threefold_repetition: false,
 	in_insufficient_material: false,
-	in_draw: false
+	in_draw: false,
 };
 
 export const gameOverReducer = (state, action) => {

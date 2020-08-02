@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Snackbar from '@material-ui/core/Snackbar';
 
 const Toast = (props) => {
@@ -13,4 +14,8 @@ const Toast = (props) => {
 	);
 };
 
+Toast.prototype = {
+	message: PropTypes.string.isRequired,
+	open: PropTypes.bool,
+};
 export default Toast;

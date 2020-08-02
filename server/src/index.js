@@ -19,6 +19,7 @@ app.use(cors());
 app.use(express.json());
 app.use(saveGameHandler);
 app.use(fetchGameHandler);
+app.get('/', (req, res) => res.send({ name: 'Slack Chess' }));
 
 const server = http.createServer(app);
 const io = socketio(server);

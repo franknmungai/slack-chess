@@ -7,7 +7,9 @@ router.get('/api/game/:gameID', async (req, res) => {
 
 	const game = await Game.findOne({ gameID });
 	if (!game) {
-		return res.status(400).send([{ message: 'Could not find game' }]);
+		return res.status(400).send({
+			errors: [{ message: 'Could not find game' }],
+		});
 	}
 
 	return res.send(game);

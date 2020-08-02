@@ -7,7 +7,7 @@ const validateRequest = (req, res, next) => {
 		field: error.param,
 	}));
 	if (!errors.isEmpty()) {
-		return res.status(400).send(serializedErrors);
+		return res.status(400).send({ errors: serializedErrors });
 	}
 
 	next();

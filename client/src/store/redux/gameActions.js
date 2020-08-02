@@ -1,6 +1,0 @@
-export const Types = {
-	SET_CURRENT_PLAYER_NAME: '',
-	SET_OPPONENET_NAME: '',
-	SET_CURRENT_PLAYER_TURN: '',
-	SET_SAVED_GAME_FEN: '',
-};

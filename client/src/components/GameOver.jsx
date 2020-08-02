@@ -1,22 +1,20 @@
 import React from 'react';
 import '../styles/game-over.css';
-import '../styles/home.css';
 import TypedText from './TypedText';
 import wonsvg from '../images/win.svg';
 import lostsvg from '../images/checkmated.svg';
 import '../styles/join.css';
 
-const GameOver = (props) => {
-	const {
-		in_checkmate,
-		in_stalemate,
-		in_threefold_repetition,
-		in_insufficient_material,
-		in_draw,
-	} = props.gameOverState;
+// const {
+// 	in_checkmate,
+// 	in_stalemate,
+// 	in_threefold_repetition,
+// 	in_insufficient_material,
+// 	in_draw,
+// } = props.gameOverState;
 
+const GameOver = (props) => {
 	let endClause = '';
-	props.GameOver.in_checkmate = true;
 	for (const [key, value] of Object.entries(props.gameOverState)) {
 		if (value) {
 			//if value is true

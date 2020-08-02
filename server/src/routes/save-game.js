@@ -26,7 +26,9 @@ router.post('/api/game', validators, validateRequest, async (req, res) => {
 		}
 		res.send({ message: 'Game was saved successfully' });
 	} catch (error) {
-		res.status(500).send({ message: error });
+		res
+			.status(500)
+			.send({ error: [{ message: 'Could not save game', error }] });
 	}
 });
 
