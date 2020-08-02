@@ -25,6 +25,7 @@ import {
 import Captured from '../components/Captured';
 import AppBar from '../components/AppBar';
 import Toast from '../components/Toast';
+import { saveGame } from '../store/actions/save-game';
 
 const SOCKET_SERVER = 'localhost:4000';
 let socket = io(SOCKET_SERVER);
@@ -117,8 +118,21 @@ const App = (props) => {
 	}, [chess]);
 
 	useEffect(() => {
-		socket.on('OpponentLeft', () => setDisconnected(true));
-	}, []);
+		socket.on('OpponentLeft', () => {
+			setDisconnected(true);
+			const white = playerColor === 'w' ? 'You' : opponent;
+			const black = playerColor === 'b' ? 'You' : opponent;
+
+			(async () => {
+				await saveGame({
+					white,
+					black,
+					gameID: qs.parse(props.location.search).id,
+					fen,
+				});
+			})();
+		});
+	}, [opponent]);
 
 	const onDragStartHandler = (piece, pos) => {
 		//sets the currenty playing piece and position
@@ -210,7 +224,7 @@ const App = (props) => {
 				playerColor={playerColor}
 				disconnected={disconnected}
 			/>
-			{gameOver ? (
+			{!gameOver ? (
 				<div className="game">
 					<Captured color="b" pieces={capturedPieces} />
 					<Board>{markup}</Board>
