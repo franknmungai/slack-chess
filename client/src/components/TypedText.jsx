@@ -25,7 +25,7 @@ const TypedText = (props) => {
 		}, speed);
 
 		return () => clearInterval(timer);
-	}, [text]);
+	}, [text, speed, loop]);
 
 	return <p className="m-1 type-writer">{text}|</p>;
 };

@@ -17,8 +17,8 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(saveGameHandler);
-app.use(fetchGameHandler);
+// app.use(saveGameHandler);
+// app.use(fetchGameHandler);
 app.get('/', (req, res) => res.send({ name: 'Slack Chess' }));
 
 const server = http.createServer(app);
@@ -76,20 +76,20 @@ io.on('connection', (socket) => {
 
 		if (player) {
 			io.to(player.game).emit('message', {
-				text: `${player.name} has left the game. You can save the game and resume later when you wish`,
+				text: `${player.name} has left the game.`,
 			});
 			socket.broadcast.to(player.game).emit('OpponentLeft');
-			console.log(`${player.name} has left the game ${player.id}`);
+			console.log(`${player.name} has left the game ${player.game}`);
 		}
 	});
 });
 
 const start = async () => {
-	await mongoose.connect(`${process.env.MONGODB_URL}`, {
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
-		useCreateIndex: true,
-	});
+	// await mongoose.connect(`${process.env.MONGODB_URL}`, {
+	// 	useNewUrlParser: true,
+	// 	useUnifiedTopology: true,
+	// 	useCreateIndex: true,
+	// });
 	server.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
 };
 

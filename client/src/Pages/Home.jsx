@@ -19,7 +19,6 @@ const Home = (props) => {
 		const { id } = qs.parse(props.location.search);
 		if (id) {
 			setInvited(id);
-			console.log(id);
 		}
 	}, [invite]);
 
@@ -41,7 +40,11 @@ const Home = (props) => {
 			<h1 className="mainText">Slack Chess</h1>
 			<div className="row center m-1">
 				{icons.map((icon) => (
-					<Tooltip title={icon.text} style={{ marginRight: '1rem' }}>
+					<Tooltip
+						title={icon.text}
+						style={{ marginRight: '1rem' }}
+						key={icon.icon}
+					>
 						<a href={icon.link} target="_blank" rel="noopener noreferrer">
 							{icon.icon}
 						</a>

@@ -9,9 +9,8 @@ const Captured = ({ pieces, color }) => {
 	return (
 		<div className="captured__column">
 			{colorPieces.map(({ player, captured }) => {
-				const img = `${player}${captured.toUpperCase()}`; //wP for white pawn
+				const img = `${player}${captured.toUpperCase()}`;
 				const key = Math.random().toString();
-
 				return (
 					<div key={key}>
 						<img

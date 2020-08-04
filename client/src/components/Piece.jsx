@@ -26,13 +26,12 @@ const Piece = (props) => {
 		<img
 			width="75%"
 			height="75%"
-			draggable={props.draggable} //opponent pieces are not draggable. Out of turn players have editable=false
+			draggable={props.draggable}
 			src={getPieceImage(nameExpression)}
 			alt=""
 			ref={element}
 			onDragStart={dragStartHandler}
 			onDragEnd={dragEndHandler}
-			// For mobile apps
 			onTouchStart={touchStartHandler}
 			onTouchEnd={dragEndHandler}
 			onTouchMove={dragEndHandler}

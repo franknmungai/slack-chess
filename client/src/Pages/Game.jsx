@@ -25,9 +25,9 @@ import {
 import Captured from '../components/Captured';
 import AppBar from '../components/AppBar';
 import Toast from '../components/Toast';
-import { saveGame } from '../store/actions/save-game';
+// import { saveGame } from '../store/actions/save-game';
 
-const SOCKET_SERVER = 'localhost:4000';
+const SOCKET_SERVER = 'https://stack-chess.herokuapp.com/';
 let socket = io(SOCKET_SERVER);
 
 const startingFen =
@@ -60,11 +60,11 @@ const App = (props) => {
 	const [disconnected, setDisconnected] = useState(false);
 
 	useEffect(() => {
-		const { id, name } = qs.parse(props.location.search);
+		const { search } = props.location;
+		const { id, name } = qs.parse(search);
 		socket.emit('join', { name, game: id }, ({ error, color }) => {
 			// we get an error or a color if the player was added successfully
 			if (error) setToast(error);
-
 			if (color) {
 				const message = `You have been assigned to ${
 					color === 'w' ? 'white' : 'black'
@@ -120,17 +120,17 @@ const App = (props) => {
 	useEffect(() => {
 		socket.on('OpponentLeft', () => {
 			setDisconnected(true);
-			const white = playerColor === 'w' ? 'You' : opponent;
-			const black = playerColor === 'b' ? 'You' : opponent;
+			// const white = playerColor === 'w' ? 'You' : opponent;
+			// const black = playerColor === 'b' ? 'You' : opponent;
 
-			(async () => {
-				await saveGame({
-					white,
-					black,
-					gameID: qs.parse(props.location.search).id,
-					fen,
-				});
-			})();
+			// (async () => {
+			// 	await saveGame({
+			// 		white,
+			// 		black,
+			// 		gameID: qs.parse(props.location.search).id,
+			// 		fen,
+			// 	});
+			// })();
 		});
 	}, [opponent]);
 
@@ -166,10 +166,9 @@ const App = (props) => {
 				})
 			);
 		}
-
 		gameOverCheck();
 
-		// emit socket event with details about the move
+		// emit socket event with detsails about the move
 		socket.emit('move', {
 			piece: currentPlaying.current,
 			fromPos: fromPos.current,

@@ -5,12 +5,10 @@ import Game from './Pages/Game';
 
 const App = () => {
 	return (
-		// <Provider store={store}>
 		<Router>
 			<Route path="/" exact component={Home} />
 			<Route path="/game" component={Game} />
 		</Router>
-		// </Provider>
 	);
 };
 

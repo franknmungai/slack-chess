@@ -1,16 +1,16 @@
-import '../styles/join.css';
 import React, { useState, useEffect } from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import formImage from '../images/form-image.jpg';
 import { useHistory } from 'react-router-dom';
+import '../styles/join.css';
 
 // Join form
+const hostname = 'https://friendlychat-a2335.firebaseapp.com/';
 const Join = (props) => {
 	const [name, setName] = useState('');
 	const [gameId, setgameId] = useState('');
-	const [sentInvite, setSentInvite] = useState(false);
 	const mobile = useMediaQuery('(max-width: 500px)');
 	const { invite, open, onClose } = props;
 
@@ -18,7 +18,6 @@ const Join = (props) => {
 		//some kind of id from an invite link
 		if (invite) {
 			setgameId(invite);
-			setSentInvite(true);
 		} else {
 			const id = Math.random().toString().replace('0.', '');
 			setgameId(id);
@@ -33,7 +32,7 @@ const Join = (props) => {
 		}
 	};
 
-	const shareText = `Hello. Join me for a round of chess on Slack Chess at https://slack-chess.com?id=${gameId}`;
+	const shareText = `Hello. Join me for a round of chess on Slack Chess at ${hostname}?id=${gameId}`;
 	const subject = 'Slack Chess Game Invite';
 
 	return (
@@ -41,7 +40,6 @@ const Join = (props) => {
 			open={open}
 			onClose={onClose}
 			aria-labelledby="form-dialog-title"
-			// className="joinOuterContainer"
 			fullWidth
 			maxWidth="lg"
 			onBackdropClick={onClose}
@@ -82,11 +80,7 @@ const Join = (props) => {
 						</div>
 						<hr className="hairline" />
 						{!invite ? (
-							<ShareButtons
-								onClick={() => setSentInvite(true)}
-								subject={subject}
-								shareText={shareText}
-							/>
+							<ShareButtons subject={subject} shareText={shareText} />
 						) : (
 							<h3 className="text-center">
 								Hey, care to join me for my chess game?{' '}
@@ -121,7 +115,10 @@ export const ShareButtons = (props) => {
 					onClick={onClick}
 					rel="noopener noreferrer"
 				>
-					<img src="https://img.icons8.com/color/48/000000/whatsapp.png" />
+					<img
+						src="https://img.icons8.com/color/48/000000/whatsapp.png"
+						alt="social"
+					/>
 				</a>
 				<a
 					href={`mailto:?Subject=${encodeURIComponent(
@@ -130,7 +127,10 @@ export const ShareButtons = (props) => {
 					onClick={onClick}
 					rel="noopener noreferrer"
 				>
-					<img src="https://img.icons8.com/fluent/48/000000/gmail.png" />
+					<img
+						src="https://img.icons8.com/fluent/48/000000/gmail.png"
+						alt="social"
+					/>
 				</a>
 				<a
 					href={`https://twitter.com/messages/compose?recipient_id=&text=${shareText}`}
@@ -138,7 +138,10 @@ export const ShareButtons = (props) => {
 					onClick={onClick}
 					rel="noopener noreferrer"
 				>
-					<img src="https://img.icons8.com/fluent/48/000000/twitter.png" />
+					<img
+						src="https://img.icons8.com/fluent/48/000000/twitter.png"
+						alt="social"
+					/>
 				</a>
 			</div>
 		</React.Fragment>

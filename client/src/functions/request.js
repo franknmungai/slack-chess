@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:4000';
+const BASE_URL = 'https://stack-chess.herokuapp.com/';
 
 const request = ({ route, body, method, onSuccess }) => {
 	const url = BASE_URL + route;

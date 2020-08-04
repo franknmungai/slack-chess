@@ -18,7 +18,7 @@ const GameOver = (props) => {
 	for (const [key, value] of Object.entries(props.gameOverState)) {
 		if (value) {
 			//if value is true
-			endClause = 'It ended in a' + key.replace('in_', '');
+			endClause = 'It ended in a ' + key.replace('in_', '');
 		}
 	}
 
@@ -31,7 +31,10 @@ const GameOver = (props) => {
 	return (
 		<div className="game-over-root">
 			<h1>
-				Game Over <span role="img">🙌</span>
+				Game Over{' '}
+				<span role="img" aria-label="game over">
+					🙌
+				</span>
 			</h1>
 			<p className="endClause">{endClause}</p>
 
@@ -46,9 +49,10 @@ const GameOver = (props) => {
 				>
 					game over
 				</object>
+				<a className="button play-again" href="/">
+					Play again
+				</a>
 			</div>
-
-			<button className="btn play-agaim">Play again</button>
 		</div>
 	);
 };

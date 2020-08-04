@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import qs from 'querystring';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -12,13 +13,11 @@ import Popper from '@material-ui/core/Popper';
 import Fade from '@material-ui/core/Fade';
 import Paper from '@material-ui/core/Paper';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import qs from 'qs';
 import '../styles/game.css';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
 		flexGrow: 1,
-		// marginBottom: '-0.65rem',
 	},
 	menuButton: {
 		marginRight: theme.spacing(2),
@@ -42,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 		padding: '0.4rem',
 	},
 }));
-
+const hostname = 'https://friendlychat-a2335.firebaseapp.com/';
 const GameBar = (props) => {
 	const classes = useStyles();
 	const [anchorEl, setAnchorEl] = useState(null);
@@ -56,6 +55,7 @@ const GameBar = (props) => {
 		setPopperOpen((state) => !state);
 	};
 	const mobile = useMediaQuery('(max-width: 500px)');
+
 	return (
 		<div className={classes.root}>
 			<AppBar
@@ -93,7 +93,6 @@ const GameBar = (props) => {
 								<Tooltip title="Invite your opponent" color="primary">
 									<ShareIcon style={{ color: '#fff' }} onClick={openPopper} />
 								</Tooltip>
-								{/* <ClickAwayListener onClickAway={() => setPopperOpen(false)}> */}
 								<Popper
 									open={popperOpen}
 									anchorEl={anchorEl}
@@ -106,14 +105,15 @@ const GameBar = (props) => {
 												<ShareButtons
 													onClick={() => {}}
 													subject="Slack Chess Game Invite"
-													shareText={`Hello. Join me for a round of chess on Slack Chess at https://slack-chess.com?id=${`qs.parse(location.search).id`}`}
+													shareText={`Hello. Join me for a round of chess on Slack Chess at ${hostname}?id=${
+														qs.parse(window.location.search).id
+													}`}
 													headingSmall
 												/>
 											</Paper>
 										</Fade>
 									)}
 								</Popper>
-								{/* </ClickAwayListener> */}
 							</>
 						)}
 					</IconButton>

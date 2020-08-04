@@ -32,7 +32,7 @@ const Cell = (props) => {
 			onTouchEnd={() => {
 				dropHandler();
 				console.log('TouchEnd', props.pos);
-			}} //mobile
+			}}
 			onTouchMove={() => {}}
 		>
 			<span>
@@ -40,7 +40,7 @@ const Cell = (props) => {
 					piece={props.piece}
 					color={props.color}
 					pos={props.pos}
-					onDragStart={(piece, pos) => props.onDragStart(piece, pos)} //will be called with two params: pass them to parent
+					onDragStart={(piece, pos) => props.onDragStart(piece, pos)}
 					draggable={draggable}
 				/>
 			</span>
