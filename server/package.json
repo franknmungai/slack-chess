@@ -15,7 +15,7 @@
 		"express": "^4.17.1",
 		"express-validator": "^6.6.0",
 		"mongoose": "^5.9.26",
-		"socket.io": "^2.3.0"
+		"socket.io": "^2.4.0"
 	},
 	"devDependencies": {
 		"env-cmd": "^10.1.0",
